@@ -9,6 +9,7 @@ public class Main {
         BinarySearchTree BST = new BinarySearchTree();
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
+        int selection; String secondarySelect;
         System.out.println("Fill the tree from a file: \'1\'\n" +
                 "Add a value to tree: \'2\'\n" +
                 "Delete a value from the tree: \'3\'\n" +
@@ -18,17 +19,19 @@ public class Main {
                 "Clear the tree: \'7\'\n" +
                 "Exit Program: \'8\'");
         while (running){
-            System.out.println("Enter selection: ");
-            int selection = 0; String secondarySelect;
-            while (selection < 1 && selection > 8){
+            try {
+                System.out.println("Enter selection: ");
                 selection = Integer.parseInt(scanner.nextLine());
+            } catch(NumberFormatException e){
+                continue;
+            }
                 switch(selection) {
                     case 1: // fill tree from file
                         System.out.println("Enter file name: ");
                         secondarySelect = scanner.nextLine();
                         Queue<Integer> fileIntake = new LinkedList<Integer>();
                         try {
-                            Scanner file = new Scanner(new File("C:\\Users\\nicholasu750_lpsk12\\IdeaProjects\\rbinary-search-trees-2-nicholas-shortlastname\\" + secondarySelect));
+                            Scanner file = new Scanner(new File("C:\\Users\\nicholasu750_lpsk12\\IdeaProjects\\binary-search-trees-2-nicholas-shortlastname\\" + secondarySelect));
                             BST = new BinarySearchTree();
                             while (file.hasNextInt()) {
                                 BST.add(file.nextInt());
@@ -38,18 +41,21 @@ public class Main {
                         }
                         break;
                     case 2: // add value to tree
-                        System.out.println("Enter file name: ");
+                        System.out.println("Enter value to add: ");
                         secondarySelect = String.valueOf(scanner.nextInt());
                         BST.add(Integer.valueOf(secondarySelect));
                         break;
                     case 3: //delete value from tree
-                        // uhhhhhh
-                    case 4:
+                        System.out.println("Enter value to delete: ");
+                        secondarySelect = String.valueOf(scanner.nextInt());
+                        BST.delete(Integer.valueOf(secondarySelect));
+                        break;
+                    case 4: //see if tree has value
                         System.out.println("Enter value to search for: ");
                         secondarySelect = scanner.nextLine();
                         System.out.print("Value is in tree: " + BST.contains(Integer.valueOf(secondarySelect)));
                         break;
-                    case 5:
+                    case 5: //test traversals
                         System.out.println("Which tree traversal (pre, in, post): ");
                         secondarySelect = scanner.nextLine().toLowerCase();
                         switch (secondarySelect){
@@ -66,7 +72,7 @@ public class Main {
                                 System.out.println("Invalid tree traversal");
                         }
                         break;
-                    case 6:
+                    case 6: //Print stats
                         System.out.println("Which statistic (nodes, leaf nodes, height): ");
                         secondarySelect = scanner.nextLine().toLowerCase();
                         switch (secondarySelect){
@@ -83,16 +89,16 @@ public class Main {
                                 System.out.println("Invalid statistic");
                         }
                         break;
-                    case 7:
+                    case 7: //Clear tree
                         BST = new BinarySearchTree();
                         break;
-                    case 8:
+                    case 8: //Exit program
                         running = false;
                         break;
                     default:
-                        System.out.print("Invalid Selection");
+                        System.out.println("Invalid Selection");
                 }
+            selection = 0;
             }
         }
     }
-}
