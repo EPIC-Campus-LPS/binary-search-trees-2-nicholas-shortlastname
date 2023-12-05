@@ -5,6 +5,12 @@ import java.util.NoSuchElementException;
 import java.util.Queue;
 import java.util.zip.ZipEntry;
 
+/**
+ * A cless representing a Binary Search Tree
+ *
+ * @author Nicholas Un
+ * @version 1.0, 12/5/23
+ */
 public class BinarySearchTree {
     public TreeNode<Integer> root = null;
 
@@ -12,6 +18,10 @@ public class BinarySearchTree {
         this.root = root;
     }
 
+    /**
+     * Adds a value
+     * @param value value added to the tree
+     */
     public void add(Integer value) {
         TreeNode<Integer> checkingNode = root;
         if (root == null) {
@@ -33,6 +43,11 @@ public class BinarySearchTree {
         }
     }
 
+    /**
+     * Checks if a value is in the tree
+     * @param value The value that might be in the search tree
+     * @return If the value is in the tree or not
+     */
     public boolean contains(Integer value) {
         Queue<Integer> queue = inOrder(root);
         while (!queue.isEmpty()) {
@@ -43,6 +58,10 @@ public class BinarySearchTree {
         return false;
     }
 
+    /**
+     * Counts how many nodes there are
+     * @return The number of nodes
+     */
     public int countNodes() {
         Queue<Integer> queue = inOrder(root);
         int nodes = 0;
@@ -53,10 +72,19 @@ public class BinarySearchTree {
         return nodes;
     }
 
+    /**
+     * Counts how many leaf nodes there are
+     * @return The number of leaf nodes
+     */
     public int countLeafNodes() {
         return countingLeafNodes(root);
     }
 
+    /**
+     * Recursive helper method for counting leaf nodes
+     * @param startPoint the starting node/root of the method
+     * @return how many leaf nodes the subtree with root startPoint has
+     */
     private int countingLeafNodes(TreeNode<Integer> startPoint) {
         if (startPoint == null) {
             return 0;
@@ -70,10 +98,19 @@ public class BinarySearchTree {
         return leafNodes;
     }
 
+    /**
+     * Checks the height
+     * @return Height of the tree
+     */
     public int getHeight() {
         return gettingHeight(root) - 1;
     }
 
+    /**
+     * Recursive helper method for checking the height
+     * @param startPoint the starting node/root of the method
+     * @return the height of startPoint
+     */
     private int gettingHeight(TreeNode<Integer> startPoint) {
         if (startPoint == null) {
             return -1;
@@ -94,6 +131,10 @@ public class BinarySearchTree {
         }
     }
 
+    /**
+     * Helper method for outputting ordering methods to System.out
+     * @param orderInts The queue of integers needing to be outputted
+     */
     private void printOrder(Queue<Integer> orderInts) {
         String output = "";
         while (!orderInts.isEmpty()) {
@@ -102,10 +143,18 @@ public class BinarySearchTree {
         System.out.println(output);
     }
 
+    /**
+     * Outputs the tree in Pre-Order order
+     */
     public void printPreorder() {
         printOrder(preOrder(root));
     }
 
+    /**
+     * Recursive helper method for printing in Pre-Order
+     * @param startPoint the starting node/root of the method
+     * @return The Pre-Order order of the subtree with root startPoint
+     */
     private Queue<Integer> preOrder(TreeNode<Integer> startPoint) {
         if (startPoint == null) {
             return new LinkedList<>();
@@ -131,10 +180,17 @@ public class BinarySearchTree {
         return queueOutput;
     }
 
+    /**
+     * Outputs the tree in In-Order order
+     */
     public void printInorder() {
         printOrder(inOrder(root));
     }
-
+    /**
+     * Recursive helper method for printing in In-Order
+     * @param startPoint the starting node/root of the method
+     * @return The In-Order order of the subtree with root startPoint
+     */
     private Queue<Integer> inOrder(TreeNode<Integer> startPoint) {
         if (startPoint == null) {
             return new LinkedList<>();
@@ -160,10 +216,17 @@ public class BinarySearchTree {
         return queueOutput;
     }
 
+    /**
+     * Outputs the tree in Post-Order order
+     */
     public void printPostorder() {
         printOrder(postOrder(root));
     }
-
+    /**
+     * Recursive helper method for printing in Post-Order
+     * @param startPoint the starting node/root of the method
+     * @return The Post-Order order of the subtree with root startPoint
+     */
     private Queue<Integer> postOrder(TreeNode<Integer> startPoint) {
         if (startPoint == null) {
             return new LinkedList<>();
@@ -189,6 +252,12 @@ public class BinarySearchTree {
         return queueOutput;
     }
 
+    /**
+     * Deletes value from the tree and reconfigures the tree around the deletion
+     * If the value cannot be found, throw NoSuchElementException
+     * @param value The element to be deleted from the tree
+     * @return The value deleted from the tree
+     */
     public Integer delete(Integer value) {
         if (!contains(value)) {
             throw new NoSuchElementException("Element is not in tree");
@@ -207,9 +276,11 @@ public class BinarySearchTree {
 
             TreeNode<Integer> parentNodeOfRemoved = null; // make a node that will be filled with the parent node of node with value once found;
             while (parentNodeOfRemoved == null) {
-                if ((treeNodeQueue.peek().getLeftChild() != null && treeNodeQueue.peek().getLeftChild().getValue() == value) || (treeNodeQueue.peek().getRightChild() != null && treeNodeQueue.peek().getRightChild().getValue() == value)) {
+                if ((treeNodeQueue.peek().getLeftChild() != null && treeNodeQueue.peek().getLeftChild().getValue() == value)
+                        || (treeNodeQueue.peek().getRightChild() != null && treeNodeQueue.peek().getRightChild().getValue() == value)) {
+                    // if the node being checked is a parent of the node being removed, fill the parentNodeOfRemoved, subsequently stopping the checking process
                     parentNodeOfRemoved = treeNodeQueue.remove();
-                } else {
+                } else { //otherwise, move on to the next node
                     treeNodeQueue.remove();
                 }
             }
@@ -259,6 +330,11 @@ public class BinarySearchTree {
         return value;
     }
 
+    /**
+     * Recursive helper method for getting a queue of all Nndes in the tree
+     * @param startPoint the starting node/root of the method
+     * @return A queue of all the Nodes in the subtree with root startPoint
+     */
     private Queue<TreeNode<Integer>> treeNodeQueue(TreeNode<Integer> startPoint) {
         if (startPoint == null) {
             return new LinkedList<>();

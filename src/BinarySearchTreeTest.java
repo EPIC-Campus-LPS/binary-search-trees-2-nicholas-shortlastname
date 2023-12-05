@@ -85,13 +85,15 @@ class BinarySearchTreeTest {
     @DisplayName("Deleting")
     void delete() {
         BinarySearchTree BST = new BinarySearchTree();
-        BST.add(5); BST.add(2); BST.add(9); BST.add(1); BST.add(4); BST.add(6); BST.add(3);
-        assertAll(() -> assertEquals(5, BST.delete(5)),
-                () -> assertEquals(false, BST.contains(5)),
-                () -> assertEquals(4, BST.delete(4)),
-                () -> assertEquals(false, BST.contains(4)),
-                () -> assertEquals(9, BST.delete(9)),
-                () -> assertEquals(false, BST.contains(9)),
+        BST.add(6); BST.add(3);  BST.add(10); BST.add(1); BST.add(5); BST.add(8); BST.add(12); BST.add(7); BST.add(13);
+        assertAll(() -> assertEquals(12, BST.delete(12)),
+                () -> assertEquals(false, BST.contains(12)),
+                () -> assertEquals(8, BST.delete(8)),
+                () -> assertEquals(false, BST.contains(8)),
+                () -> assertEquals(3, BST.delete(3)),
+                () -> assertEquals(false, BST.contains(3)),
+                () -> assertEquals(10, BST.delete(10)),
+                () -> assertEquals(false, BST.contains(10)),
                 () -> assertEquals(6, BST.delete(6)),
                 () -> assertEquals(false, BST.contains(6)),
         () -> assertThrows(NoSuchElementException.class, () -> BST.delete(0)));
